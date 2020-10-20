@@ -34,7 +34,7 @@ function getEmojiChoices({ types, symbol }) {
 
 async function loadConfig() {
 
-  const getConfig = obj => obj && obj.config && obj.config['cz-emoji']
+  const getConfig = obj => obj && obj.config && obj.config['cz-jira-smart-emoji']
   const readFromPkg = async () => readPkg().then(res => (res ? getConfig(res.packageJson) : null))
   const config = await readFromPkg()
 

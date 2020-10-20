@@ -1,10 +1,10 @@
 {
-  "name": "cz-emoji",
-  "version": "1.2.2",
-  "description": "Commitizen adapter formatting commit messages using emojis.",
-  "author": "Nicolas Gryman <ngryman@gmail.com> (http://ngryman.sh/)",
+  "name": "cz-jira-smart-emoji",
+  "version": "1.0.0",
+  "description": "Forked from cz-emoji. Commitizen adapter formatting commit messages using emojis with jira smart commits",
+  "author": "Morgan",
   "license": "MIT",
-  "repository": "ngryman/cz-emoji",
+  "repository": "moogsG/cz-jira-smart-emoji",
   "main": "index.js",
   "engines": {
     "node": ">=4"
