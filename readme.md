@@ -1,8 +1,8 @@
-# cz-emoji
+# cz-jira-smart-emoji
 
-> Commitizen adapter formatting commit messages using emojis.
+> Commitizen adapter formatting commit messages using emojis and jira smart commits
 
-**cz-emoji** allows you to easily use emojis in your commits using [commitizen].
+**cz-jira-smart-emoji** allows you to easily use emojis in your commits using [commitizen].
 
 ```sh
 ? Select the type of change you are committing: (Use arrow keys)
@@ -18,10 +18,10 @@
 **Globally**
 
 ```bash
-npm install --global cz-emoji
+npm install --global cz-jira-smart-emoji
 
 # set as default adapter for your projects
-echo '{ "path": "cz-emoji" }' > ~/.czrc
+echo '{ "path": "cz-jira-smart-emoji" }' > ~/.czrc
 ```
 
 **Locally**
@@ -35,7 +35,7 @@ Add this to your `package.json`:
 ```json
 "config": {
   "commitizen": {
-    "path": "cz-emoji"
+    "path": "cz-jira-smart-emoji"
   }
 }
 ```
@@ -48,16 +48,16 @@ $ git cz
 
 ## Customization
 
-By default `cz-emoji` comes ready to run out of the box. Uses may vary, so there are a few configuration options to allow fine tuning for project needs.
+By default `cz-jira-smart-emoji` comes ready to run out of the box. Uses may vary, so there are a few configuration options to allow fine tuning for project needs.
 
 ### How to
 
-Configuring `cz-emoji` can be handled in the users home directory (`~/.czrc`) for changes to impact all projects or on a per project basis (`package.json`). Simply add the config property as shown below to the existing object in either of the locations with your settings for override.
+Configuring `cz-jira-smart-emoji` can be handled in the users home directory (`~/.czrc`) for changes to impact all projects or on a per project basis (`package.json`). Simply add the config property as shown below to the existing object in either of the locations with your settings for override.
 
 ```json
 {
   "config": {
-    "cz-emoji": {}
+    "cz-jira-smart-emoji": {}
   }
 }
 ```
@@ -66,14 +66,14 @@ Configuring `cz-emoji` can be handled in the users home directory (`~/.czrc`) fo
 
 #### Types
 
-By default `cz-emoji` comes preconfigured with the [Gitmoji](https://gitmoji.carloscuesta.me/) types.
+By default `cz-jira-smart-emoji` comes preconfigured with the [Gitmoji](https://gitmoji.carloscuesta.me/) types.
 
 An [Inquirer.js] choices array:
 
 ```json
 {
   "config": {
-    "cz-emoji": {
+    "cz-jira-smart-emoji": {
       "types": [
         {
           "emoji": "🌟",
@@ -87,7 +87,7 @@ An [Inquirer.js] choices array:
 }
 ```
 
-#### Scopes
+#### Workflows
 
 An [Inquirer.js] choices array:
 
@@ -95,88 +95,16 @@ An [Inquirer.js] choices array:
 {
   "config": {
     "cz-emoji": {
-      "scopes": ["home", "accounts", "ci"]
+      "workflows": [{"name": "testing", "value":"testing"}]
     }
   }
 }
 ```
 
-#### Symbol
-
-A boolean value that allows for an using a unicode value rather than the default of [Gitmoji](https://gitmoji.carloscuesta.me/) markup in a commit message. The default for symbol is false.
-
-```json
-{
-  "config": {
-    "cz-emoji": {
-      "symbol": true
-    }
-  }
-}
-```
-
-#### Skip Questions
-
-An array of questions you want to skip:
-
-```json
-{
-  "config": {
-    "cz-emoji": {
-      "skipQuestions": ["scope", "issues"]
-    }
-  }
-}
-```
-
-You can skip the following questions: `scope`, `body`, and `issues`. The `type` and `subject` questions are mandatory.
-
-
-#### Customize Questions
-
-An object that contains overrides of the original questions:
-
-```json
-{
-  "config": {
-    "cz-emoji": {
-      "questions": {
-        "body": "This will be displayed instead of original text"
-      }
-    }
-  }
-}
-```
 
 ## Examples
 
 - https://github.com/Falieson/TRAM
-
-## Commitlint
-
-Commitlint can be set to work with this package by leveraging the package https://github.com/arvinxx/commitlint-config-gitmoji.
-
-```bash
-npm install --save-dev commitlint-config-gitmoji
-```
-
-_commitlint.config.js_
-
-```js
-module.exports = {
-  extends: ['gitmoji'],
-  parserPreset: {
-    parserOpts: {
-      headerPattern: /^(:\w*:)(?:\s)(?:\((.*?)\))?\s((?:.*(?=\())|.*)(?:\(#(\d*)\))?/,
-      headerCorrespondence: ['type', 'scope', 'subject', 'ticket']
-    }
-  }
-}
-```
-
-## License
-
-MIT © [Nicolas Gryman](http://ngryman.sh)
 
 [commitizen]: https://github.com/commitizen/cz-cli
 [inquirer.js]: https://github.com/SBoudrias/Inquirer.js/
