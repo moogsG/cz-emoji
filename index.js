@@ -1,8 +1,12 @@
+const fs = require('fs')
 const readPkg = require('read-pkg-up')
 const truncate = require('cli-truncate')
 const wrap = require('wrap-ansi')
 const pad = require('pad')
+const path = require('path')
 const fuse = require('fuse.js')
+const homeDir = require('home-dir')
+const util = require('util')
 
 const types = require('./lib/types')
 
@@ -32,12 +36,23 @@ function getEmojiChoices({ types, symbol }) {
 }
 
 
+
 async function loadConfig() {
+  const getConfig = obj => obj && obj.config
 
-  const getConfig = obj => obj && obj.config && obj.config['cz-jira-smart-emoji']
-  const readFromPkg = async () => readPkg().then(res => (res ? getConfig(res.packageJson) : null))
-  const config = await readFromPkg()
+  const readFromCzrc = dir =>
+    util
+      .promisify(fs.readFile)(dir, 'utf8')
+      .then(JSON.parse, () => null)
+      .then(getConfig)
 
+  const readFromLocalCzrc = () =>
+    readPkg().then(res =>
+      res && res.path ? readFromCzrc(`${path.dirname(res.path)}/.czrc`) : null
+    )
+
+  const config = (await readFromLocalCzrc())
+  
   return { ...defaultConfig, ...config }
 }
 
