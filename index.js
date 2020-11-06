@@ -52,7 +52,7 @@ async function loadConfig() {
     )
 
   const config = (await readFromLocalCzrc())
-  
+
   return { ...defaultConfig, ...config }
 }
 
@@ -199,7 +199,7 @@ function format(answers) {
 module.exports = {
   prompter: function(cz, commit) {
     cz.prompt.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'))
-    cz.prompt.registerPrompt('maxlength-input', require('inquirer-maxlength-input-prompt'))
+    cz.prompt.registerPrompt('maxlength-input', require('@matti-o7/inquirer-maxlength-input-prompt'))
 
     loadConfig()
       .then(createQuestions)
