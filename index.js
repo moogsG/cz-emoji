@@ -7,16 +7,28 @@ const path = require('path')
 const fuse = require('fuse.js')
 const homeDir = require('home-dir')
 const util = require('util')
+const { exec } = require('child_process');
+const execProm = util.promisify(exec);
 
 const types = require('./lib/types')
 
 const defaultConfig = {
   types,
   workflows:[],
+  projectDir: '~/workspace/hanger',
   symbol: false,
   skipQuestions: [''],
   subjectMaxLength: 75,
   conventional: false
+}
+
+let jiraTicket;
+
+async function getGitBranch(){
+  const jiraMatcher = /((?!([A-Z0-9a-z]{1,10})-?$)[A-Z]{1}[A-Z0-9]+-\d+)/g;
+  const branch = await execProm('git rev-parse --abbrev-ref HEAD')
+  const jiraTickets = branch.stdout.match(jiraMatcher);
+  return jiraTickets[jiraTickets.length - 1]
 }
 
 function getEmojiChoices({ types, symbol }) {
@@ -38,6 +50,7 @@ function getEmojiChoices({ types, symbol }) {
 
 
 async function loadConfig() {
+  jiraTicket = await getGitBranch()
   const getConfig = obj => obj && obj.config
 
   const readFromCzrc = dir =>
@@ -130,6 +143,7 @@ function createQuestions(config) {
       type: 'input',
       name: 'issues',
       message: 'Jira Issue ID(s):',
+      default: jiraTicket,
       validate: function(input) {
         if (!input) {
           return 'Must specify issue IDs';
