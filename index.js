@@ -28,7 +28,11 @@ async function getGitBranch(){
   const jiraMatcher = /((?!([A-Z0-9a-z]{1,10})-?$)[A-Z]{1}[A-Z0-9]+-\d+)/g;
   const branch = await execProm('git rev-parse --abbrev-ref HEAD')
   const jiraTickets = branch.stdout.match(jiraMatcher);
-  return jiraTickets ? jiraTickets[jiraTickets.length - 1] : 'no jira ticket';
+  if(Array.isArray(jiraTicket)) {
+    return jiraTickets[jiraTickets.length -1];
+  } else {
+    return 'NO-TICKET'
+  }
 }
 
 function getEmojiChoices({ types, symbol }) {
